@@ -18,28 +18,31 @@ export class ContactForm extends Component {
     this.setState({ [name]: value });
   };
 
-  onSubmit = event => {
+  handleSubmit = event => {
     event.preventDefault();
     this.props.onSubmit(this.state);
     this.formReset();
   };
 
   formReset = () => {
-    this.setState({ name: '', number: '' });
+    this.setState({
+      name: '',
+      number: '',
+    });
   };
 
   render() {
     return (
-      <FormStyle onSubmit={this.onSubmit}>
+      <FormStyle onSubmit={this.handleSubmit}>
         <LabelStyled htmlFor="">
           <SpanStyled>Name</SpanStyled>
           <InputStyled
             type="text"
+            value={this.state.name}
             name="name"
-            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+            pattern="^[a-zA-Zа-яА-Я]+(([' \-][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             required
-            value={this.state.name}
             placeholder="Annie Copeland"
             onChange={this.handleChange}
           />
@@ -48,12 +51,12 @@ export class ContactForm extends Component {
           <SpanStyled>Number</SpanStyled>
           <InputStyled
             type="tel"
+            value={this.state.number}
             name="number"
-            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+            pattern="\+?\d{1,4}?[ .\-\s]?\(?\d{1,3}?\)?[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
             placeholder="227-91-26"
-            value={this.state.number}
             onChange={this.handleChange}
           />
         </LabelStyled>

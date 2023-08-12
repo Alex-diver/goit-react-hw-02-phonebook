@@ -35,6 +35,7 @@ export const BtnStyled = styled.button`
   padding: 5px;
   border-radius: 5px;
   border: 1px solid;
+  cursor: pointer;
   background: transparent;
 
   &:focus,

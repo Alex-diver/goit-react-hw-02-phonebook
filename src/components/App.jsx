@@ -1,8 +1,10 @@
 import { GlobalStyle } from './GlobalStyle';
 import { Component } from 'react';
-// import { nanoid } from 'nanoid';
+import { nanoid } from 'nanoid';
+import { TitleStyled, ContactsTitle } from './App.styled';
 import { ContactForm } from './ContactForm/ContactForm';
-import { TitleStyled } from './App.styled';
+import { Filter } from './Filter/Filter';
+import { ContactList } from './ContactsList/ContactsList';
 
 export class App extends Component {
   state = {
@@ -14,12 +16,60 @@ export class App extends Component {
     ],
     filter: '',
   };
+  onFormSubmit = ({ name, number }) => {
+    const existingContact = this.state.contacts.find(
+      contact => contact.name.toLowerCase().trim() === name.toLowerCase().trim()
+    );
+
+    if (existingContact) {
+      alert(`${name} is already in contacts.`);
+    } else {
+      const contactId = nanoid(3);
+
+      this.setState({
+        contacts: [
+          ...this.state.contacts,
+          {
+            id: contactId,
+            name: name,
+            number: number,
+          },
+        ],
+      });
+    }
+  };
+
+  onSearch = event => {
+    const searchName = event.target.value.toLowerCase();
+    this.setState({ filter: searchName });
+  };
+
+  contactDelete = id => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== id),
+    }));
+  };
 
   render() {
+    const { contacts, filter } = this.state;
+
+    const filteredContacts = contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter)
+    );
+
+    const displayedContacts = filter ? filteredContacts : contacts;
     return (
       <>
         <TitleStyled>Phonebook</TitleStyled>
-        <ContactForm onChange={this.onFormSubmitData} />
+        <ContactForm onSubmit={this.onFormSubmit} />
+
+        <ContactsTitle>Contacts</ContactsTitle>
+        <Filter filter={filter} onHandleSearch={this.onSearch} />
+
+        <ContactList
+          contacts={displayedContacts}
+          onHandleDelete={this.contactDelete}
+        />
 
         <GlobalStyle />
       </>
