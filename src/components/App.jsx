@@ -1,6 +1,6 @@
 import { GlobalStyle } from './GlobalStyle';
 import { Component } from 'react';
-import { nanoid } from 'nanoid';
+// import { nanoid } from 'nanoid';
 import { ContactForm } from './ContactForm/ContactForm';
 import { TitleStyled } from './App.styled';
 
