@@ -1,10 +1,13 @@
-import { GlobalStyle } from './GlobalStyle';
-import { Component } from 'react';
 import { nanoid } from 'nanoid';
-import { TitleStyled, ContactsTitle } from './App.styled';
+
+import { Component } from 'react';
+
 import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactsList/ContactsList';
+
+import { TitleStyled, ContactsTitle, ConteinerStyled } from './App.styled';
+import { GlobalStyle } from './GlobalStyle';
 
 export class App extends Component {
   state = {
@@ -59,20 +62,17 @@ export class App extends Component {
 
     const displayedContacts = filter ? filteredContacts : contacts;
     return (
-      <>
+      <ConteinerStyled>
         <TitleStyled>Phonebook</TitleStyled>
         <ContactForm onSubmit={this.onFormSubmit} />
-
         <ContactsTitle>Contacts</ContactsTitle>
         <Filter filter={filter} onHandleSearch={this.onSearch} />
-
         <ContactList
           contacts={displayedContacts}
           onHandleDelete={this.contactDelete}
         />
-
         <GlobalStyle />
-      </>
+      </ConteinerStyled>
     );
   }
 }
